@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block bloglist %}
+{% for obj in article_list %}
+    <h3><a href="{% url 'article:detail' obj.pk %}">{{obj.title}}</a></h3>
+    <figure><img src="{{ obj.img.url }}" alt="{{ obj.title }}" width="100%",height="100%"></figure>
+    <ul>
+        <p>{{ obj.description }}</p>
+        <br/>
+        <a title="{{ obj.title }}" href="{% url 'article:detail' obj.pk %}" target="_blank" class="readmore" >阅读全文&gt;&gt;</a>
+    </ul>
+    <p class="dateview">
+        <span>{{ obj.create_time }}</span>
+        <span>作者： {{ obj.user }}</span>
+        <span>个人博客：[<a href="#">{{ obj.category }}</a>]</span>
+        <span>浏览数：{{ obj.views }}</span>
+    </p>
+    {% empty %}
+    无文章！
+{% endfor %}
+<!--
+{% comment %}
+简单分页导航：
+{% if is_paginated %}
+<div class="pagination-simple">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+    {% endif %}
+    <span class="current">第{{ page_obj.number }}页 / 共{{ paginator.num_pages }}页</span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endcomment %}
+
+{% comment %}
+完善的分页导航
+{% endcomment %}-->
+    {% if is_paginated %}
+        <div>
+            <ul  class="pagination">
+                {% if first %}
+                    <li><a href="?page=1" >Q1</a></li>
+                {% endif %}
+                    {% if left_has_more %}
+                        <li><span>...</span></li>
+                    {% endif %}
+                {% if left %}
+                    {% for i in left %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+                {% endif %}
+                <li class="current"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+                {% if right %}
+                    {% for i in right %}
+                        <li><a href="?page={{ i }}">{{ i }}</a> </li>
+                    {% endfor %}
+                {% endif %}
+                    {% if right_has_more %}
+                        <li><span>...</span></li>
+                    {% endif %}
+                    {% if last %}
+                        <li><a href="?page={{ paginator.num_pages }}">Q{{ paginator.num_pages }}</a></li>
+                    {% endif %}
+            </ul>
+        </div>
+{% endif %}
+{% endblock %}
