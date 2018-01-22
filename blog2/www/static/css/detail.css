@@ -1,0 +1,47 @@
+@charset "gb2312";
+
+/* comment list */
+.comment-list {
+	margin-top: 30px;    /* margin 在一个声明中设置所有外边距属性 */
+	font-size: 16px;
+}
+
+
+
+.comment-item {
+    border-bottom: 1px;  /* border 在一个声明中设置所有的边框属性  bottom下边框  left左边框   right右边框  top上边框*/
+    margin-bottom: 30px;
+    padding-bottom: 20px;/* 在一个声明中设置所有内边框属性  内边距是内容和边框的距离 */
+
+}
+.comment-item .name,
+.comment-item .date {
+    color: #444;
+    font-size: 14px;
+
+}
+
+.comment-item .name:after {
+    content: '，';
+}
+
+.comment-item .text {
+    padding-top: 5px;
+}
+
+
+.pagination li {
+    float: left;
+    margin: 10px;
+}
+
+.current a{
+    font-size: 30px;
+}
+
+.widget-title {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    padding: 10px 0 0;
+    font-weight: 400;
+}

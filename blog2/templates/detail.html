@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block bloglist %}
+    <img src="{{ article.img.url }}" alt="{{ artilce.title }}" style="width: 50%;">
+<ul>
+    <p>{{ article.title }}</p>
+    <div style="text-indent: 2em;"> {{ article.article|safe }}</div>
+</ul>
+<p class="dateview">
+    <span>{{ article.create_time }}</span>
+    <span>作者：{{ article.user }}</span>
+    <span>个人博客：[<a href="{% url 'article:category' article.pk %}">{{ article.category }}</a>]</span>
+    <span>浏览数：{{ article.views }}</span>
+</p>
+<form action="{% url 'comments:article_comment' article.pk %}" method="post">
+    {% csrf_token %}
+{% for field in form %}
+<div class="fieldWrapper">
+    {{ field.errors }}
+    {{ field }}
+    {% if field.help_text %}
+    <p class="help">{{ field.help_text|safe }}</p>
+    {% endif %}
+</div>
+{% endfor %}
+    <button type="submit">发表</button>
+</form>
+<div class="comment-list">
+    <h2>评论列表</h2>
+    <ul class="list-unstyled">
+        {% for comment in comment_list %}
+            <li class="comment-item">
+                <span class="name">{{ comment.name }}</span><time class="date">{{ comment.create_time }}</time>
+                    <div class="text">
+                        {{ comment.text }}
+                    </div>
+            </li>
+        {% empty %}
+        暂无评价
+        {% endfor %}
+    </ul>
+</div>
+
+<div style="position: absolute;left:200px;bottom: 400px">
+    <h3 class="widget-title" style="font-size: 30px">文章目录</h3>
+    {{ article.toc|safe }}
+</div>
+{% endblock %}
+
